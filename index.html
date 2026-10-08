@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ग्राम पंचायत कोरियाडीह – मनरेगा कार्ययोजना 2026-27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root{
+    /* Mangal (Windows) पहले, न मिले तो Noto Sans Devanagari; अंग्रेज़ी के लिए Calibri/Arial */
+    --font: Mangal, "Noto Sans Devanagari", "Nirmala UI", Calibri, Arial, sans-serif;
+    --line:#7a7a7a; --head:#e6edf5; --accent:#1f5fa8; --bg:#f6f7f9; --ink:#1b1b1b; --danger:#b3261e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px}
+  .page{max-width:100%;padding:16px}
+  h1{font-size:19px;text-align:center;margin:6px 0 4px;font-weight:700}
+  .gp{text-align:center;font-weight:700;margin:0 0 12px}
+  [contenteditable]:focus,input:focus{outline:2px solid var(--accent);outline-offset:-2px;background:#fffbe6}
+
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+  button{font-family:var(--font);font-size:14px;cursor:pointer;border:1px solid var(--accent);background:#fff;color:var(--accent);padding:6px 12px;border-radius:5px}
+  button:hover{background:var(--accent);color:#fff}
+  button.solid{background:var(--accent);color:#fff}
+  button.solid:hover{background:#174a85}
+  button:disabled{opacity:.4;cursor:default;background:#fff;color:var(--accent)}
+  .ins{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:5px;padding:4px 8px}
+  .ins input{width:64px;font-family:var(--font);font-size:14px;padding:4px;border:1px solid var(--line);border-radius:3px;text-align:center}
+  .drivest{font-size:13px;color:#555}
+  .status{margin-left:auto;font-size:13px;color:#2e7d32;min-height:1em}
+
+  .wrap{overflow-x:auto;background:#fff;border:1px solid var(--line)}
+  table{border-collapse:collapse;width:100%;min-width:1500px}
+  th,td{border:1px solid var(--line);padding:6px 8px;vertical-align:middle;text-align:center}
+  th{background:var(--head);text-align:center;font-weight:700}
+  td.wide{min-width:340px;text-align:left}
+  td[data-k]{min-width:70px}
+  tr.off{display:none}
+
+  /* क्रिया वाला कॉलम बाईं ओर, हमेशा दिखता रहे */
+  th.act,td.act{position:sticky;left:0;background:#fff;z-index:2;white-space:nowrap;text-align:center;width:92px;min-width:92px;border-right:2px solid var(--line)}
+  th.act{background:var(--head);z-index:3}
+  td.act button{display:block;width:100%;margin:2px 0;padding:2px 6px;font-size:13px}
+  td.act button.del{color:var(--danger);border-color:#d9a09b}
+  td.act button.del:hover{background:var(--danger);color:#fff}
+
+  .ctl{display:block;margin-top:4px}
+  .ctl button{padding:0 6px;font-size:13px;line-height:20px;border-radius:3px;border-color:#9aa;color:#567}
+  .ctl button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ctl button.del{color:var(--danger);border-color:#d9a09b}
+  .ctl button.del:hover{background:var(--danger);color:#fff}
+  .hl{display:block;min-height:1.2em}
+
+  .pager{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:10px 0}
+  .pager .info{font-size:13px;color:#555;margin:0 8px}
+  .pager button.cur{background:var(--accent);color:#fff}
+
+  .cert{margin:18px 0 0;line-height:1.7;text-align:justify;background:#fff;border:1px solid var(--line);padding:12px 14px}
+  .sign{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:40px;text-align:center;font-weight:700}
+  .hint{font-size:13px;color:#555;margin-top:14px}
+
+  @media print{
+    @page{size:A3 landscape;margin:10mm}
+    body{background:#fff}
+    .no-print,.bar,.pager,.hint,.act{display:none !important}
+    .wrap{overflow:visible;border:none}
+    table{min-width:0;font-size:11px}
+    .page{padding:0}
+    tr.off{display:table-row}
+    tr.pbreak{break-after:page}
+    tr{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1 id="title" contenteditable="true"></h1>
+  <p class="gp" id="gp" contenteditable="true"></p>
+
+  <div class="bar no-print">
+    <button class="solid" data-act="addrow-end">＋ नई पंक्ति (अंत में)</button>
+    <span class="ins">क्र.सं. <input type="number" id="insAt" min="0" value="1"> के बाद
+      <button class="solid" data-act="addrow-at">＋ पंक्ति जोड़ें</button></span>
+    <button class="solid" data-act="addcol-end">＋ नया कॉलम</button>
+    <button data-act="csv">⬇ Excel/CSV डाउनलोड</button>
+    <button data-act="print">🖨 प्रिंट</button>
+    <button data-act="reset">↺ रीसेट</button>
+    <button data-act="drive" id="driveBtn">☁ Google Drive से जोड़ें</button>
+    <span class="drivest" id="driveSt"></span>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div class="pager no-print"></div>
+  <div class="wrap"><table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+  <div class="pager no-print"></div>
+
+  <p class="cert" id="cert" contenteditable="true"></p>
+
+  <div class="sign">
+    <div id="s1" contenteditable="true"></div>
+    <div id="s2" contenteditable="true"></div>
+    <div id="s3" contenteditable="true"></div>
+  </div>
+
+  <p class="hint no-print">हर खाने (cell) पर क्लिक करके सीधे लिखें। पंक्ति के बाईं ओर “＋ नीचे” उसके ठीक नीचे नई पंक्ति जोड़ता है और “✕ हटाएं” उसे हटाता है। डेटा इस ब्राउज़र में अपने-आप सेव होता है; “Google Drive से जोड़ें” दबाने पर वही डेटा आपके Drive की फ़ाइल में भी सेव होने लगता है। “Excel/CSV डाउनलोड” से Excel फ़ाइल भी ले सकते हैं।</p>
+</div>
+
+<script>
+const DEFAULT = {"meta": {"title": "महात्मा गांधी राष्ट्रीय ग्रामीण रोजगार गारण्टी योजनान्तर्गत वित्तीय-वर्ष 2026-27 हेतु ग्राम पंचायत की कार्ययोजना सल्टौआ गोपालपुर बस्ती", "gp": "ग्राम पंचायत : कोरियाडीह", "cert": "प्रमाणित किया जाता है कि उपरोक्त कार्य महात्मा गाँधी नरेगा योजनान्तर्गत प्रथम बार चयनित / प्रस्तावित किये गये हैं, प्रस्तावित किये गये कार्य मनरेगा अनुमेय कार्यों की सूची के अन्तर्गत आते हैं। ग्राम सभा द्वारा परियोजनाऔं का चयनित सूची के अनुमोदन तक बॉटम-अप एप्रोच के सिद्धांतों का अनुपालन किया गया है। प्रस्तावित कार्यों में निजी भूमि पर कार्यों का चयन और व्यक्ति को सीधे लाभ पहुँचाने वाले अन्य कार्यों की सूची तैयार करते समय कमजोर तबके के परिवारों पर विशेष ध्यान दिया गया है। महात्मा गाँधी की अनुसूची 1, पैरा 20 के अनुसार ग्राम पंचायत द्वारा शुरू किये जाने वाले सभी कार्यों के लिए कुशल तथा अर्धकुशल कामगारों की मजदूरी सहित सामग्री घटक की लागत ग्राम पंचायत स्तर पर 40 प्रतिशत से अधिक नहीं होगी। मनरेगा योजनान्तर्गत वित्तीय वर्ष 2026-27 हेतु प्रस्तावित उपरोक्त कार्य अन्य किसी विभाग/ योजना की कार्ययोजना में प्रस्तावित /सम्मिलित है, ऐर न ही किसी अन्य विभाग/योजना द्वारा उक्त कार्य पूर्व में कराया गया है।", "s1": "तकनीकि सहायक", "s2": "सचिव ग्राम पंचायत का हस्ताक्षर व मुहर", "s3": "ग्राम प्रधान का हस्ताक्षर व मुहर"}, "cols": [{"id": "sr", "label": "क्र. सं.", "type": "sr"}, {"id": "name", "label": "कार्य का नाम"}, {"id": "cat", "label": "कार्य की श्रेणी"}, {"id": "size", "label": "कार्य की माप (ल. X चौ./संख्या)"}, {"id": "lab", "label": "श्रमांश", "group": "cost", "groupLabel": "कार्य की अनुमानित लागत (लाख में)", "num": true}, {"id": "mat", "label": "सामग्री", "group": "cost", "groupLabel": "कार्य की अनुमानित लागत (लाख में)", "num": true}, {"id": "tot", "label": "योग", "group": "cost", "groupLabel": "कार्य की अनुमानित लागत (लाख में)", "type": "sum"}, {"id": "days", "label": "मानव दिवस", "num": true}, {"id": "kind", "label": "कृषि / गैर कृषि"}, {"id": "conv", "label": "मनरेगा कन्वर्जेंस की स्थिति (हाँ/नहीं)"}, {"id": "lat", "label": "अक्षांश"}, {"id": "lon", "label": "देशांतर"}, {"id": "scheme", "label": "यदि हां तो योजना का नाम कालम 10 के अनुसार"}, {"id": "result", "label": "परिणाम / उपयोगिता"}], "rows": [{"name": "मो0 उमर के खेत से सल्लर के खेत तक चक मार्ग", "cat": "LD", "size": "300m x 3", "lab": "2.5", "mat": "0.05", "days": "992", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "26.983931", "lon": "82.656951", "scheme": "", "result": ""}, {"name": "रक्षाराम के खेत से सलीम के खेत तक चक मार्ग", "cat": "LD", "size": "150M", "lab": "1.5", "mat": "0.05", "days": "595", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "26.984563", "lon": "82.656865", "scheme": "", "result": ""}, {"name": "सीतापति के खेत से खातून निशा के खेत तक चकमार्ग", "cat": "LD", "size": "200 X2.5", "lab": "2.5", "mat": "0.05", "days": "793", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "26.983045", "lon": "82.653617", "scheme": "", "result": ""}, {"name": "मकबूल के खेत से अलाउद्दीन के खेत तक चकमार्ग", "cat": "LD", "size": "250 X2.5", "lab": "2.5", "mat": "0.05", "days": "992", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "26.983155", "lon": "82.653553", "scheme": "", "result": ""}, {"name": "पिचरोड से नहर तक चकमार्ग निर्माण", "cat": "LD", "size": "250 X2.5", "lab": "2", "mat": "0.05", "days": "795", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "26.985791", "lon": "82.670314", "scheme": "", "result": ""}, {"name": "पिचरोड से पुल्लू के खेत तक चकमार्ग", "cat": "LD", "size": "300X3.5", "lab": "3", "mat": "0.05", "days": "1100", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "गुलाब के घर से सी सी रोड तक चकमार्ग कार्य", "cat": "LD", "size": "500X3.5", "lab": "3.1", "mat": "0.05", "days": "1200", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "जुमराती के खेत से नहर तक चकमार्ग निर्माण", "cat": "LD", "size": "300X2.5", "lab": "2.5", "mat": "0.05", "days": "700", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "महादेव के खेत से केशवराम के खेत तक चकमार्ग निर्माण कार्य", "cat": "LD", "size": "300X3", "lab": "2.1", "mat": "0.05", "days": "700", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "सरजू प्रसाद के खेत से रामदेव के खेत तक चकमार्ग", "cat": "LD", "size": "300X3", "lab": "2.5", "mat": "0.05", "days": "1000", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "गोली के खेत से सियाराम के खेत तक नाला खुदायी कार्य", "cat": "IC", "size": "300X4", "lab": "3.6", "mat": "0.05", "days": "1200", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "कटका सिकस्ता बंजर जमीन में वृक्षारोपण कार्य", "cat": "TP", "size": "1000", "lab": "1", "mat": "0.05", "days": "500", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "मुराती के खेत से अन्नपूर्णा भवन तक नाला सफाई", "cat": "IC", "size": "200X3.5", "lab": "2.5", "mat": "0.05", "days": "1000", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "हकीम पुत्र शेरअली के खेत की मेड़बन्दी एवं समतलीकरण", "cat": "LD", "size": "1 BEEGHA", "lab": "0.5", "mat": "0.03", "days": "200", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "मुकीम के खेत का समतलीकरण एवं मेड़बन्दी", "cat": "LD", "size": "1 BEEGHA", "lab": "0.5", "mat": "0.03", "days": "200", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "अलाउद्दीन पुत्र अब्दुल्लाह के खेत का समतलीकरण एवं मेड़बंदी", "cat": "LD", "size": "1 BEEGHA", "lab": "0.5", "mat": "0.03", "days": "", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "हसीना खातून के खेत की मेड़बन्दी एवं समतलीकरण", "cat": "LD", "size": "1 BEEGHA", "lab": "0.5", "mat": "0.03", "days": "", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "अब्दुल गफूर पुत्र जियानत के खेत का समतलीकरण एवं मेड़बन्दी", "cat": "LD", "size": "1 BEEGHA", "lab": "0.5", "mat": "0.03", "days": "", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "अवधराज के घर से मुकीम के घर तक सी सी रोड निर्माण", "cat": "LD", "size": "120X2.5", "lab": "0.5", "mat": "3.8", "days": "", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "मिश्री लाल के घर से राजमणि के घर तक सी सी रोड निर्माण", "cat": "LD", "size": "70X2", "lab": "0.4", "mat": "3", "days": "", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "रामप्रकाश पुत्र रामजनम को नल के पास सोख्ता", "cat": "LD", "size": "", "lab": "0.1", "mat": "0.3", "days": "30", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "रामजियावन पुत्र रामआसरे के घर के पास सेख्ता निर्माण", "cat": "LD", "size": "", "lab": "0.1", "mat": "0.3", "days": "30", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "प्रकाश के खेत से नदी तक नाला खुदायी कार्य", "cat": "IC", "size": "200X3", "lab": "2", "mat": "0.25", "days": "1000", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "ध्रुपचन्दर के खेत से बजरंगी के खेत तक नाला खुदायी कार्य", "cat": "IC", "size": "130x4.60m", "lab": "3", "mat": "0.05", "days": "1000", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "भवानी भीख के खेत से औड़जंगल सरहद तक नाला खुदाई कार्य", "cat": "IC", "size": "250x3", "lab": "1.99", "mat": "0.05", "days": "800", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "बजरंगी शर्मा के खेत से राजतन के खेत तक चक मार्ग", "cat": "LD", "size": "96x2.5", "lab": "0.5", "mat": "0.05", "days": "200", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "परवेज के खेत से पतिराम के खेत तक चकरोड निर्माण", "cat": "LD", "size": "200x2.5", "lab": "0.9", "mat": "0.05", "days": "320", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "अलाउद्दीन के घर के बगल सिकस्ता जमीन पर वृक्षारोपण कार्य", "cat": "TP", "size": "1500", "lab": "1", "mat": "0.05", "days": "321", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}, {"name": "कब्रिस्तान से खातुन निशा के खेत तक खेत सड़क कार्य", "cat": "LD", "size": "252x4", "lab": "1.8", "mat": "0.05", "days": "600", "kind": "कृषि कार्य हेतु", "conv": "नहीं", "lat": "", "lon": "", "scheme": "", "result": ""}]};
+const KEY = 'koriyadeeh-mgnrega-2026-27';
+const PAGE = 20;               // एक पृष्ठ पर पंक्तियाँ
+
+const clone = o => JSON.parse(JSON.stringify(o));
+function load(){
+  try{
+    const t = localStorage.getItem(KEY);
+    if(t){
+      const d = JSON.parse(t);
+      if(d && d.cols && d.rows){ d.meta = Object.assign({}, DEFAULT.meta, d.meta||{}); return d; }
+    }
+  }catch(e){}
+  return clone(DEFAULT);
+}
+let S = load();
+let curPage = 0;
+
+let stTimer;
+function status(msg){
+  const el = document.getElementById('status');
+  el.textContent = msg; clearTimeout(stTimer);
+  stTimer = setTimeout(()=> el.textContent = '', 2500);
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); localStorage.setItem(KEY+'-dirty','1'); status('सेव हो गया ✓'); }
+  catch(e){ status('⚠ सेव नहीं हो सका'); }
+  scheduleDrive();
+}
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* क्र. सं. और योग: अपने-आप बनते हैं, पर चाहें तो हाथ से भी बदल सकते हैं */
+const srVal = (row,r) => (row.sr !== undefined && row.sr !== '') ? row.sr : String(r+1);
+function totVal(row){
+  if(row.tot !== undefined && row.tot !== '') return row.tot;
+  const a = parseFloat(row.lab), b = parseFloat(row.mat);
+  if(isNaN(a) && isNaN(b)) return '';
+  return String(Math.round(((a||0)+(b||0))*100)/100);
+}
+
+function ctrl(i, canDel){
+  return `<span class="ctl no-print"><button data-act="addcol" data-i="${i}" title="इसके बाद नया कॉलम जोड़ें">＋</button>` +
+         (canDel ? `<button class="del" data-act="delcol" data-i="${i}" title="यह कॉलम हटाएं">✕</button>` : '') + `</span>`;
+}
+const lbl = (c,i) => `<span class="hl" contenteditable="true" data-col="${i}">${esc(c.label)}</span>`;
+
+function renderHead(){
+  let r1 = '', r2 = '';
+  const cols = S.cols;
+  for(let i=0;i<cols.length;i++){
+    const c = cols[i];
+    if(c.group){
+      if(i>0 && cols[i-1].group === c.group){ r2 += `<th>${lbl(c,i)}</th>`; continue; }
+      let j = i; while(j+1<cols.length && cols[j+1].group === c.group) j++;
+      r1 += `<th colspan="${j-i+1}"><span class="hl" contenteditable="true" data-group="${esc(c.group)}">${esc(c.groupLabel)}</span>${ctrl(j,false)}</th>`;
+      r2 += `<th>${lbl(c,i)}</th>`;
+    } else {
+      r1 += `<th rowspan="2">${lbl(c,i)}${ctrl(i, !!c.custom)}</th>`;
+    }
+  }
+  document.getElementById('thead').innerHTML =
+    `<tr><th rowspan="2" class="act no-print">क्रिया</th>${r1}</tr><tr>${r2}</tr>`;
+}
+
+function renderBody(){
+  const cols = S.cols, n = S.rows.length;
+  document.getElementById('tbody').innerHTML = S.rows.map((row,r)=>{
+    const tds = cols.map(c=>{
+      if(c.type==='sr')  return `<td contenteditable="true" data-k="sr" class="sr">${esc(srVal(row,r))}</td>`;
+      if(c.type==='sum') return `<td contenteditable="true" data-k="tot" class="tot">${esc(totVal(row))}</td>`;
+      const cls = [c.num?'num':'', c.id==='name'?'wide':''].join(' ').trim();
+      return `<td contenteditable="true" data-k="${c.id}" class="${cls}">${esc(row[c.id])}</td>`;
+    }).join('');
+    const pb = ((r+1)%PAGE===0 && r+1<n) ? ' pbreak' : '';
+    return `<tr data-r="${r}" class="off${pb}"><td class="act no-print">` +
+      `<button data-act="addrow" data-i="${r}" title="इसके ठीक नीचे नई पंक्ति">＋ नीचे</button>` +
+      `<button class="del" data-act="delrow" data-i="${r}" title="यह पंक्ति हटाएं">✕ हटाएं</button></td>${tds}</tr>`;
+  }).join('');
+  showPage(curPage);
+}
+
+function pageCount(){ return Math.max(1, Math.ceil(S.rows.length / PAGE)); }
+
+function showPage(p){
+  curPage = Math.min(Math.max(0,p), pageCount()-1);
+  const lo = curPage*PAGE, hi = lo+PAGE;
+  document.querySelectorAll('#tbody tr').forEach(tr=>{
+    const r = +tr.dataset.r;
+    tr.classList.toggle('off', !(r>=lo && r<hi));
+  });
+  renderPager();
+}
+
+function renderPager(){
+  const total = pageCount();
+  let h = `<button data-act="page" data-i="${curPage-1}" ${curPage===0?'disabled':''}>« पिछला</button>`;
+  for(let p=0;p<total;p++) h += `<button data-act="page" data-i="${p}" class="${p===curPage?'cur':''}">${p+1}</button>`;
+  h += `<button data-act="page" data-i="${curPage+1}" ${curPage>=total-1?'disabled':''}>अगला »</button>`;
+  h += `<span class="info">पृष्ठ ${curPage+1}/${total} · कुल पंक्तियाँ: ${S.rows.length} · ${PAGE} पंक्ति प्रति पृष्ठ</span>`;
+  document.querySelectorAll('.pager').forEach(el => el.innerHTML = h);
+}
+
+function render(){
+  document.getElementById('title').textContent = S.meta.title;
+  document.getElementById('gp').textContent = S.meta.gp;
+  document.getElementById('cert').textContent = S.meta.cert;
+  ['s1','s2','s3'].forEach(id => document.getElementById(id).textContent = S.meta[id]);
+  renderHead(); renderBody();
+}
+
+const newRow = () => ({ kind:'कृषि कार्य हेतु', conv:'नहीं' });
+
+/* at = नई पंक्ति का index (0 = सबसे ऊपर) */
+function insertRow(at){
+  at = Math.min(Math.max(0, at), S.rows.length);
+  S.rows.splice(at, 0, newRow());
+  curPage = Math.floor(at / PAGE);
+  save(); renderBody();
+  const td = document.querySelector(`tr[data-r="${at}"] td[data-k="name"]`);
+  if(td){ td.scrollIntoView({block:'center'}); td.focus(); }
+}
+
+function insertCol(at){
+  const name = prompt('नए कॉलम का नाम लिखें:');
+  if(!name || !name.trim()) return;
+  S.cols.splice(at, 0, { id:'c'+Date.now(), label:name.trim(), custom:true });
+  save(); render();
+}
+function deleteCol(i){
+  const c = S.cols[i];
+  if(!confirm(`कॉलम “${c.label}” और उसका सारा डेटा हटाएं?`)) return;
+  S.cols.splice(i,1);
+  S.rows.forEach(r => delete r[c.id]);
+  save(); render();
+}
+function deleteRow(i){
+  if(!confirm(`पंक्ति संख्या ${srVal(S.rows[i], i)} हटाएं?`)) return;
+  S.rows.splice(i,1);
+  save(); renderBody();
+}
+
+function toCSV(){
+  const q = v => '"' + String(v ?? '').replace(/"/g,'""') + '"';
+  const lines = [S.cols.map(c => q(c.group ? `${c.groupLabel} - ${c.label}` : c.label)).join(',')];
+  S.rows.forEach((row,r)=>{
+    lines.push(S.cols.map(c => q(c.type==='sr' ? srVal(row,r) : c.type==='sum' ? totVal(row) : row[c.id])).join(','));
+  });
+  const blob = new Blob(['\uFEFF' + lines.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'koriyadeeh_karyayojana_2026-27.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+
+
+/* ---------- Google Drive (सिर्फ़ आपके अपने Drive में एक फ़ाइल) ---------- */
+const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com';   // ← यहाँ अपना Google OAuth Client ID डालें
+const SCOPE = 'https://www.googleapis.com/auth/drive.file';       // सिर्फ़ इस ऐप की बनाई फ़ाइल तक पहुँच
+const FILE_NAME = 'koriyadeeh-workplan-2026-27.json';
+let tokenClient = null, token = null, tokenExp = 0, fileId = null, dTimer = null;
+
+function setDrive(msg){ document.getElementById('driveSt').textContent = msg; }
+function driveBtn(){
+  document.getElementById('driveBtn').textContent = token ? '☁ Drive से जुड़ा ✓' : (linked() ? '☁ Drive फिर से जोड़ें' : '☁ Google Drive से जोड़ें');
+}
+const linked = () => { try{ return localStorage.getItem(KEY+'-linked')==='1'; }catch(e){ return false; } };
+
+async function dfetch(url, opt){
+  opt = opt || {};
+  if(!token || Date.now() > tokenExp){ token = null; driveBtn(); setDrive('☁ लॉगिन की अवधि पूरी — बटन दबाकर फिर जोड़ें (डेटा इस ब्राउज़र में सुरक्षित है)'); throw new Error('login'); }
+  opt.headers = Object.assign({Authorization:'Bearer '+token}, opt.headers || {});
+  const r = await fetch(url, opt);
+  if(r.status===401){ token = null; driveBtn(); setDrive('☁ लॉगिन समाप्त — बटन दबाकर फिर जोड़ें'); throw new Error('login'); }
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r;
+}
+
+async function findFile(){
+  const q = encodeURIComponent(`name='${FILE_NAME}' and trashed=false`);
+  const j = await (await dfetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&spaces=drive`)).json();
+  return (j.files && j.files[0]) ? j.files[0].id : null;
+}
+
+async function pushDrive(){
+  if(!token) return;
+  setDrive('☁ Drive में सेव हो रहा है…');
+  const payload = JSON.stringify(S);
+  if(!fileId){
+    const b = '-------wp' + Date.now();
+    const body = `--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify({name:FILE_NAME, mimeType:'application/json'})}\r\n` +
+                 `--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${payload}\r\n--${b}--`;
+    const j = await (await dfetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
+      {method:'POST', headers:{'Content-Type':'multipart/related; boundary='+b}, body})).json();
+    fileId = j.id;
+  } else {
+    await dfetch(`https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`,
+      {method:'PATCH', headers:{'Content-Type':'application/json; charset=UTF-8'}, body: payload});
+  }
+  try{ localStorage.removeItem(KEY+'-dirty'); }catch(e){}
+  setDrive('☁ Drive में सेव ✓');
+}
+
+function scheduleDrive(){
+  if(!token){ if(linked()) setDrive('☁ Drive से अलग — अभी सिर्फ़ इस ब्राउज़र में सेव'); return; }
+  clearTimeout(dTimer);
+  dTimer = setTimeout(()=> pushDrive().catch(e=>{ if(e.message!=='login') setDrive('⚠ Drive में सेव नहीं हुआ: '+e.message); }), 1500);
+}
+
+async function syncOnConnect(){
+  setDrive('☁ जुड़ रहा है…');
+  fileId = await findFile();
+  if(!fileId){ await pushDrive(); return; }
+  const isDirty = localStorage.getItem(KEY+'-dirty')==='1';
+  if(isDirty && !confirm('आपके Drive में पहले से डेटा मौजूद है।\n\nOK = Drive वाला डेटा लोड करें (इस ब्राउज़र के नए बदलाव मिट जाएंगे)\nCancel = इस ब्राउज़र का डेटा Drive पर चढ़ाएं')){
+    await pushDrive(); return;
+  }
+  const d = await (await dfetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`)).json();
+  if(d && d.cols && d.rows){
+    S = d; S.meta = Object.assign({}, DEFAULT.meta, S.meta || {});
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); localStorage.removeItem(KEY+'-dirty'); }catch(e){}
+    curPage = 0; render();
+    setDrive('☁ Drive से डेटा लोड हुआ ✓');
+  } else { setDrive('⚠ Drive की फ़ाइल पहचानी नहीं गई'); }
+}
+
+async function onToken(resp){
+  if(resp.error){ setDrive('⚠ लॉगिन नहीं हुआ'); return; }
+  token = resp.access_token; tokenExp = Date.now() + ((resp.expires_in||3600) - 60)*1000;
+  try{ localStorage.setItem(KEY+'-linked','1'); }catch(e){}
+  driveBtn();
+  try{ await syncOnConnect(); }catch(e){ if(e.message!=='login') setDrive('⚠ Drive त्रुटि: '+e.message); }
+}
+
+function connectDrive(){
+  if(CLIENT_ID.includes('YOUR_CLIENT_ID')){ alert('अभी Google Client ID नहीं डाला गया है।\nindex.html में CLIENT_ID वाली लाइन में अपना ID लिखें।'); return; }
+  if(!window.google || !google.accounts){ alert('Google की स्क्रिप्ट लोड नहीं हुई — इंटरनेट जाँचकर पेज रीफ़्रेश करें।'); return; }
+  if(!tokenClient) tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID, scope: SCOPE, callback: onToken,
+    error_callback: () => setDrive('लॉगिन रद्द हुआ')
+  });
+  tokenClient.requestAccessToken({prompt: linked() ? '' : 'consent'});
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-act]'); if(!b || b.disabled) return;
+  const act = b.dataset.act, i = +b.dataset.i;
+  if(act==='addrow-end') insertRow(S.rows.length);
+  else if(act==='addrow-at'){
+    const v = parseInt(document.getElementById('insAt').value, 10);
+    if(isNaN(v)) return status('क्र.सं. लिखें');
+    insertRow(v);            // क्र.सं. v के बाद = index v
+  }
+  else if(act==='addrow') insertRow(i+1);
+  else if(act==='delrow') deleteRow(i);
+  else if(act==='page') showPage(i);
+  else if(act==='addcol-end') insertCol(S.cols.length);
+  else if(act==='addcol') insertCol(i+1);
+  else if(act==='delcol') deleteCol(i);
+  else if(act==='drive') connectDrive();
+  else if(act==='csv') toCSV();
+  else if(act==='print') window.print();
+  else if(act==='reset'){
+    if(confirm('सारे बदलाव मिटाकर शुरुआती डेटा वापस लाएं?')){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      S = clone(DEFAULT); curPage = 0; render(); save(); status('रीसेट हो गया');
+    }
+  }
+});
+
+document.getElementById('tbody').addEventListener('input', e=>{
+  const td = e.target.closest('td[data-k]'); if(!td) return;
+  const tr = td.parentElement, r = +tr.dataset.r, k = td.dataset.k, row = S.rows[r];
+  const txt = td.textContent;
+  if(k==='sr' || k==='tot'){
+    if(txt.trim()==='') delete row[k]; else row[k] = txt;
+  } else {
+    row[k] = txt;
+    if(k==='lab' || k==='mat'){            // योग फिर अपने-आप बने
+      delete row.tot;
+      const t = tr.querySelector('td[data-k="tot"]');
+      if(t) t.textContent = totVal(row);
+    }
+  }
+  save();
+});
+/* क्र. सं./योग खाली छोड़ें तो अपने-आप वाली क़ीमत लौट आए */
+document.getElementById('tbody').addEventListener('focusout', e=>{
+  const td = e.target.closest('td[data-k]'); if(!td) return;
+  const k = td.dataset.k;
+  if((k==='sr' || k==='tot') && td.textContent.trim()===''){
+    const r = +td.parentElement.dataset.r;
+    td.textContent = k==='sr' ? srVal(S.rows[r], r) : totVal(S.rows[r]);
+  }
+});
+
+document.getElementById('thead').addEventListener('input', e=>{
+  const s = e.target.closest('[data-col],[data-group]'); if(!s) return;
+  if(s.dataset.group){
+    S.cols.forEach(c => { if(c.group===s.dataset.group) c.groupLabel = s.textContent; });
+  } else {
+    S.cols[+s.dataset.col].label = s.textContent;
+  }
+  save();
+});
+
+['title','gp','cert','s1','s2','s3'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', e=>{ S.meta[id] = e.target.textContent; save(); });
+});
+
+/* सिर्फ़ plain text paste; Enter दबाने पर नीचे वाले cell पर जाएं */
+document.addEventListener('paste', e=>{
+  if(!e.target.closest('[contenteditable]')) return;
+  e.preventDefault();
+  const t = (e.clipboardData.getData('text/plain') || '').replace(/\s*\r?\n\s*/g,' ');
+  document.execCommand('insertText', false, t);
+});
+document.getElementById('tbody').addEventListener('keydown', e=>{
+  if(e.key!=='Enter' || e.shiftKey) return;
+  e.preventDefault();
+  const td = e.target.closest('td[data-k]'); if(!td) return;
+  let nxt = td.parentElement.nextElementSibling;
+  if(nxt && nxt.classList.contains('off')){ showPage(curPage+1); nxt = td.parentElement.nextElementSibling; }
+  if(nxt){ const t = nxt.querySelector(`td[data-k="${td.dataset.k}"]`); if(t) t.focus(); }
+});
+
+render();
+driveBtn();
+if(linked()) setDrive('☁ Drive से अलग — जोड़ने के लिए बटन दबाएँ');
+</script>
+</body>
+</html>
